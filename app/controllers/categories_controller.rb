@@ -22,14 +22,20 @@ class CategoriesController < ApplicationController
   end
 
   def show
+    @category = Category.find(params[:id])
   end
 
   def edit
-    
+    @category = Category.find(params[:id])
   end
 
   def update
-    
+    @category = Category.find(params[:id])
+    if @category.update_attributes(category_params)
+      render json: @category.to_json, status: :no_content 
+    else
+      render json: @category.errors.full_messages, status: :unprocessable_entity 
+    end
   end
 
   def destroy
