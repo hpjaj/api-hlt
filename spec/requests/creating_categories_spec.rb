@@ -12,6 +12,9 @@ RSpec.describe 'The categories create method should', :type => :request do
         { title: "Movies"}
       }.to_json,
       { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s, 'Authorization' => "Token token=#{@user.auth_token}" }
+    expect( response.status ).to eq(201)
+    expect( response.content_type ).to eq(Mime::JSON)
+    expect( response.body ).to include("Movies")
   end
 
   it "does not create a category without a valid user auth_token" do
