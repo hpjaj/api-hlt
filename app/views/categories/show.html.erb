@@ -1,1 +1,5 @@
 <h2><%= @category.title.capitalize %> Blog Posts</h2>
+
+<% @posts.each do |post| %>
+  <p><%= link_to post.title, category_post_path(@category.id, post.id) %></p>
+<% end %>
