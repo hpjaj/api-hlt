@@ -26,11 +26,17 @@ class Categories::PostsController < ApplicationController
   end
 
   def edit
-    
+    @category = Category.find(params[:category_id])
+    @post = Post.find(params[:id])
   end
 
   def update
-    
+    @post = Post.find(params[:id])
+    if @post.update_attributes(post_params)
+      render json: @post.to_json, status: :no_content 
+    else
+      render json: @post.errors.full_messages, status: :unprocessable_entity 
+    end
   end
 
   def destroy
