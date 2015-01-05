@@ -45,3 +45,5 @@ group :test do
 end
 
 gem 'faker'
+gem 'bootstrap-sass', '~> 3.3.1'
+
