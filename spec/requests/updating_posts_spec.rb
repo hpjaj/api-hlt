@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'The posts update method should', :type => :request do
+RSpec.describe 'The posts update method', :type => :request do
 
   before do
     @user = create(:user)
@@ -8,10 +8,11 @@ RSpec.describe 'The posts update method should', :type => :request do
     @post = create(:post, title: "Post About Lions")
   end
 
-  it "update an existing post when provided a valid user auth_token" do
+  it "should update an existing post when provided a valid user auth_token" do
     patch "categories/#{@category.id}/posts/#{@post.id}",
       { post: { title: 'Post About Tigers' } }.to_json,
-      { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s, 'Authorization' => "Token token=#{@user.auth_token}" }
+      json_request_headers(@user.auth_token)
+
     expect( response.status ).to eq(204)
 
     get "categories/#{@category.id}/posts/#{@post.id}", {}, {'Accept' => Mime::JSON}
@@ -23,7 +24,8 @@ RSpec.describe 'The posts update method should', :type => :request do
   it "should not update an existing post when provided an invalid user auth_token" do
     patch "categories/#{@category.id}/posts/#{@post.id}",
       { post: { title: 'Post About Tigers' } }.to_json,
-      { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s, 'Authorization' => "Token token=#{@user.auth_token}+fake" }
+      json_request_headers("#{@user.auth_token}+fake")
+
     expect( response.status ).to eq(401)
 
     get "categories/#{@category.id}/posts/#{@post.id}", {}, {'Accept' => Mime::JSON}

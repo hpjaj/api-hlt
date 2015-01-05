@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'The categories index method', :type => :request do
 
-  it "return all of the categories in JSON" do
+  it "should return all of the categories in JSON" do
     category1 = Category.create!(title: "Movies")
     category2 = Category.create!(title: "Restaurants")
     get '/categories', {}, {'Accept' => Mime::JSON}
