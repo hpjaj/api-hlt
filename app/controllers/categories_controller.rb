@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  
+
   before_action :authenticate, except: [:index, :show]
 
   respond_to :json
@@ -17,7 +17,7 @@ class CategoriesController < ApplicationController
     if @category.save
       render json: @category.to_json, status: :created 
     else
-      render json: @category.errors.full_messages, status: :unprocessable_entity
+      render json: @category.errors.full_messages, status: :unprocessable_entity 
     end
   end
 
@@ -40,7 +40,9 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    
+    @category = Category.find(params[:id])
+    @category.destroy
+    head :no_content
   end
 
   private
@@ -48,4 +50,5 @@ class CategoriesController < ApplicationController
     def category_params
       params.require(:category).permit(:title)
     end
+
 end
